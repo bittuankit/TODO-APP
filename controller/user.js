@@ -17,3 +17,23 @@ export const registerUser = async (req, res, next) => {
 
   sendCookie(res, user, 201, "user created...");
 };
+
+export const loginUser = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  let user = await Collections.findOne({ email }).select("+password");
+
+  if (!user)
+    return res
+      .status(404)
+      .json({ success: false, message: "Invalid email or password." });
+
+  const isExist = await bcrypt.compare(password, user.password);
+
+  if (!isExist)
+    return res
+      .status(404)
+      .json({ success: false, message: "Invalid email or password." });
+
+  sendCookie(res, user, 200, "user logged in...");
+};
