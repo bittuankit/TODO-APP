@@ -20,3 +20,7 @@ const userSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
+
+const Collections = mongoose.model("user", userSchema);
+
+export default Collections;
