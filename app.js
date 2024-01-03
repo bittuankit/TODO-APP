@@ -3,6 +3,7 @@ import { config } from "dotenv";
 import userRouter from "./router/user.js";
 import taskRouter from "./router/task.js";
 import cookieParser from "cookie-parser";
+import { errorMiddleware } from "./middleware/error.js";
 
 config({ path: "./config.env" });
 
@@ -17,3 +18,5 @@ app.use("/api/v1/task", taskRouter);
 app.get("/", (req, res) => {
   res.send("Working...");
 });
+
+app.use(errorMiddleware);
